@@ -3,24 +3,36 @@
 `DFS`
 
 ```class Solution {
-  public:
-    // Function to return a list containing the DFS traversal of the graph
-    
-    void dfs(vector<int> &ans , vector<int> &visited , vector<int> adj[] , int i) {
-        
-        if(!visited[i]) {
-          ans.push_back(i);
-            visited[i] = true;
-            for(auto x : adj[i])
-               dfs(ans , visited , adj , x);
+  private:
+    void dfs(vector<int> adj[], vector<int> &ans, vector<int> &vis, int source) {
+        // here we check that source node visited or not
+        if(!vis[source]) {
+            // If not visited then first we will mark as vis
+            vis[source] = true;
+            
+            // we will push that source node as a dfs traversal output
+            ans.push_back(source);
+            
+            for(auto node: adj[source]) {
+                
+                // we will call dfs from here node that is adjecent of source
+                dfs(adj, ans, vis, node);
+            }
         }
     }
- 
+  public:
+    // Function to return a list containing the DFS traversal of the graph.
     vector<int> dfsOfGraph(int V, vector<int> adj[]) {
-        vector<int> ans;
-        vector<int> visited(V+1 , false);
+        // for storing ans of dfs traversal
+        vector<int> ans; 
         
-            dfs(ans , visited , adj , 0);
+        // This is a visited array who insure from looping
+        vector<int> vis(V, false);
+        
+        // here we are calling dfs
+            //  we call this dfs call in loop when it will more than one component
+        
+        dfs(adj, ans, vis, 0);
         
         return ans;
     }
